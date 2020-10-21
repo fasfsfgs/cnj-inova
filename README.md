@@ -1,8 +1,8 @@
 # markov.law
 
 ## Links
-https://github.com/fasfsfgs/cnj-inova.git
-link do vídeo no youtube
+* https://github.com/fasfsfgs/cnj-inova.git
+* https://www.youtube.com/watch?v=LJ4-jOPDdG8
 
 ## Arquivos do projeto
 * `docs/logo_marcovlaw.jpeg`
@@ -28,7 +28,7 @@ Esse passo pode demorar dependendo do volume de dados analisados.
 
 4. Executar o arquivo `src/processar_dados.py`;
 A análise dos processos fornecidos em JSON é realizada nesse passo.
-Ao final, o arquivo `lista_movimentos.json` é criado na pasta raíz do projeto para ser utilizado pelo frontend.
+Ao final, os arquivos `lista_movimentos.csv` e `lista_movimentos.json` são criados na pasta raíz do projeto para ser utilizado pelo frontend.
 
 5. Executar o arquivo `application.py`;
 Uma aplicação web (utilizando Flask) é executada.
