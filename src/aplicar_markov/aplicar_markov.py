@@ -45,7 +45,7 @@ def aplicar(processos):
 
     classes_escolhidas = [1116, 7, 159, 283]
     tribunais = ['TJSP', 'TJPR', 'TJRJ', 'TJBA', 'TJSC', 'TJES', 'TJPE', 'TJGO', 'TJRO', 'TJAM', 'TJAL', 'TJMG', 'TJMT',
-                'TJCE', 'TJRN', 'TJTO', 'TJPB', 'TJDFT', 'TJPA', 'TJMS', 'TJSE', 'TJAC', 'TJPI', 'TJRS', 'TJMA', 'TJRR', 'TJAP']
+                 'TJCE', 'TJRN', 'TJTO', 'TJPB', 'TJDFT', 'TJPA', 'TJMS', 'TJSE', 'TJAC', 'TJPI', 'TJRS', 'TJMA', 'TJRR', 'TJAP']
 
     for classe_escolhida in classes_escolhidas:
         df_classe = df[(df.classe_processual == classe_escolhida)]
@@ -124,5 +124,7 @@ def aplicar(processos):
     DF_final['alerta'] = DF_final['alerta'].abs()
 
     DF_final = DF_final[(DF_final['alerta'] > 10.34)]
+
+    DF_final = DF_final.sort_values('alerta', ascending=False)
 
     return DF_final
