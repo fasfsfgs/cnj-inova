@@ -3,10 +3,15 @@ import os
 
 import pandas as pd
 
-# extrair dados das colunas
+
+###
+#  funções para extrair dados das colunas
+###
 
 
 def assunto_principal(row):
+    # Obter assunto principal que possui código nacional
+    # Se não tiver código nacional, obter código pai nacional
     assuntos = row.get('dadosBasicos').get('assunto')
     if not assuntos:
         return None
@@ -98,6 +103,7 @@ def orgao_julgador_param(row, param):
 
 
 def movimentos(row):
+    # Obter os movimentos que possuem código nacional entre vírgulas
     movimentos = row.get('movimento')
     if not movimentos:
         return ''
@@ -125,33 +131,35 @@ def possui_codigo_movimento_nacional(movimento):
     return 'codigoNacional' in movimento.get('movimentoNacional')
 
 
-# gerar dfs
+###
+# gerar df
+###
 
-
-cols = [
-    'millisInsercao',
-    'grau',
-    'siglaTribunal',
-    'numero',
-    'classe_processual',
-    'assunto_principal',
-    'competencia',
-    'data_ajuizamento',
-    'prioridade',
-    'valor_causa',
-    'processo_vinculado',
-    'relacao_incidental',
-    'outros_numeros',
-    'codigo_localidade',
-    'intervencao_mp',
-    'proc_el',
-    'dsc_sistema',
-    'orgao_julgador_nome',
-    'orgao_julgador_cod_municipio_ibge',
-    'orgao_julgador_cod_orgao',
-    'orgao_julgador_instancia',
-    'movimentos',
-]
+def colunas():
+    return [
+        'millisInsercao',
+        'grau',
+        'siglaTribunal',
+        'numero',
+        'classe_processual',
+        'assunto_principal',
+        'competencia',
+        'data_ajuizamento',
+        'prioridade',
+        'valor_causa',
+        'processo_vinculado',
+        'relacao_incidental',
+        'outros_numeros',
+        'codigo_localidade',
+        'intervencao_mp',
+        'proc_el',
+        'dsc_sistema',
+        'orgao_julgador_nome',
+        'orgao_julgador_cod_municipio_ibge',
+        'orgao_julgador_cod_orgao',
+        'orgao_julgador_instancia',
+        'movimentos',
+    ]
 
 
 def gerar_df(jsonFile, indice, total):
@@ -178,22 +186,20 @@ def gerar_df(jsonFile, indice, total):
     df['orgao_julgador_cod_orgao'] = df.apply(orgao_julgador_cod_orgao, axis=1)
     df['orgao_julgador_instancia'] = df.apply(orgao_julgador_instancia, axis=1)
     df['movimentos'] = df.apply(movimentos, axis=1)
-    return df[cols]
+    return df[colunas()]
 
 
-searchPath = os.getcwd() + '/data/justica_estadual/**/*.json'
+def obter_df():
+    searchPath = os.getcwd() + '/data/justica_estadual/**/*.json'
 
-jsonFiles = glob.glob(searchPath, recursive=True)
-qtdeJsons = len(jsonFiles)
-print('%d jsons encontrados...' % qtdeJsons)
+    jsonFiles = glob.glob(searchPath, recursive=True)
+    qtdeJsons = len(jsonFiles)
+    print('%d jsons encontrados...' % qtdeJsons)
 
-dfs = [gerar_df(jsonFile, ind, qtdeJsons)
-       for ind, jsonFile in enumerate(jsonFiles)]
+    dfs = [gerar_df(jsonFile, ind, qtdeJsons)
+           for ind, jsonFile in enumerate(jsonFiles)]
 
-print('Concatenando os dataframes...')
-df = pd.concat(dfs)
+    print('Concatenando os dataframes...')
+    df = pd.concat(dfs)
 
-print('Transformando em csv...')
-os.makedirs('out', exist_ok=True)
-csv = df.to_csv(path_or_buf='out/data.csv',
-                index=False, header=True, columns=cols)
+    return df
