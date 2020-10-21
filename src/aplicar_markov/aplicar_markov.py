@@ -117,8 +117,6 @@ def aplicar(processos):
             save_in_df(DF_final, movimentos, A_df, P_df, PG_df,
                        'xxx', classe_escolhida, tribunal, g, PG_df)
 
-            print(DF_final.head)
-
     DF_final['alerta'] = DF_final['prob'] - DF_final['prob_Nac']
     DF_final['alerta'] = DF_final['alerta'] / DF_final['prob_Nac']
     DF_final['alerta'] = DF_final['alerta'].abs()
