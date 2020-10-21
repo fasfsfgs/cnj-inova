@@ -179,3 +179,4 @@ pip-selfcheck.json
 
 # Project specific
 out/
+data/*
