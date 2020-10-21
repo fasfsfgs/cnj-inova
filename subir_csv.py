@@ -4,7 +4,7 @@ import json
 lista_movimentos = []
 
 with open('lista_movimentos.csv') as csvfile:
-    data = csv.reader(csvfile, delimiter=';')
+    data = csv.reader(csvfile, delimiter=',')
 
     for row in data:
 
@@ -17,10 +17,3 @@ with open('lista_movimentos.csv') as csvfile:
             item = mov_origem_destino + classe_processual + siglaTribunal
 
             lista_movimentos.append(item)
-
-
-
-
-
-
-
